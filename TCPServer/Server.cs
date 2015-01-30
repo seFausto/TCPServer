@@ -16,17 +16,17 @@ namespace TCPServer
 		TcpListener _tcpListener;
 		Thread _listenThread;
 
-		public Server ()
+		public Server()
 		{
-			_tcpListener = new TcpListener (IPAddress.Any, _port);
-			_listenThread = new Thread (new ThreadStart (ListenForClients));
+			_tcpListener = new TcpListener(IPAddress.Any, _port);
+			_listenThread = new Thread(new ThreadStart(ListenForClients));
 
 		}
 
-		void HandleClientComm (object obj)
+		void HandleClientComm(object obj)
 		{
 			var tcpClient = (TcpClient)obj;
-			var clientStream = tcpClient.GetStream ();
+			var clientStream = tcpClient.GetStream();
 
 			var message = new byte[Max_Message_Size];
 			var bytesRead = 0;
@@ -37,12 +37,12 @@ namespace TCPServer
 
 				try
 				{
-					bytesRead = clientStream.Read (message, 0, Max_Message_Size);
+					bytesRead = clientStream.Read(message, 0, Max_Message_Size);
 
 				}
 				catch (Exception ex)
 				{
-					Debug.Print ("{0} - {1}", "Error", ex.Message);
+					Debug.Print("{0} - {1}", "Error", ex.Message);
 				}
 
 				//This means the client discoonected
@@ -51,27 +51,33 @@ namespace TCPServer
 					break;
 				}
 
-				var encoder = new ASCIIEncoding ();
-				Debug.Print (encoder.GetString (message, 0, bytesRead));
+				var encoder = new ASCIIEncoding();
+				Debug.Print(encoder.GetString(message, 0, bytesRead));
+
+				byte[] buffer = encoder.GetBytes("Hello Client!");
+				clientStream.Write(buffer, 0, buffer.Length);
+				clientStream.Flush();
 
 			}
 
-			tcpClient.Close ();
+			tcpClient.Close();
 
 		}
 
-		void ListenForClients ()
+		void ListenForClients()
 		{
-			_tcpListener.Start ();
+			_tcpListener.Start();
 
 			while (true)
 			{
-				var client = _tcpListener.AcceptTcpClient ();
+				var client = _tcpListener.AcceptTcpClient();
 
-				var clientThread = new Thread (new ParameterizedThreadStart (HandleClientComm));
-				clientThread.Start (client);
+				var clientThread = new Thread(new ParameterizedThreadStart(HandleClientComm));
+				clientThread.Start(client);
 			}
 		}
+
+
 	}
 }
 
