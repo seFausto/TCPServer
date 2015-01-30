@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
-using System.Diagnostics;
 using System.Text;
+using System.Threading;
 
 namespace TCPServer
 {
@@ -20,7 +20,7 @@ namespace TCPServer
 		{
 			_tcpListener = new TcpListener(IPAddress.Any, _port);
 			_listenThread = new Thread(new ThreadStart(ListenForClients));
-
+			_listenThread.Start();
 		}
 
 		void HandleClientComm(object obj)
