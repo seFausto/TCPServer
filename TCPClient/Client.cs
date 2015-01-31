@@ -7,6 +7,8 @@ namespace TCPClient
 {
     public class Client
     {
+        NetworkStream _clientStream;
+
         public Client()
         {
             var client = new TcpClient();
@@ -14,17 +16,19 @@ namespace TCPClient
 
             client.Connect(serverEndPoint);
 
-            var clientStream = client.GetStream();
 
+            _clientStream = client.GetStream();
+
+        }
+
+
+        public void SendMessage(string message)
+        {
             var encoder = new ASCIIEncoding();
             var buffer = encoder.GetBytes("Hello Server");
 
-
-            clientStream.Write(buffer, 0, buffer.Length);
-            clientStream.Flush();
-
-			Console.WriteLine (buffer.ToString());
-
+            _clientStream.Write(buffer, 0, buffer.Length);
+            _clientStream.Flush();
         }
     }
 }
