@@ -12,6 +12,8 @@ namespace TCPClient
 
             client.SendMessage("Testing");
 
+			client.SendMessage ("disconnect");
+
             Console.ReadLine();
         }
     }

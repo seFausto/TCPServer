@@ -7,7 +7,7 @@ namespace TCPClient
 {
     public class Client
     {
-        NetworkStream _clientStream;
+        readonly NetworkStream _clientStream;
 
         public Client()
         {
@@ -25,7 +25,7 @@ namespace TCPClient
         public void SendMessage(string message)
         {
             var encoder = new ASCIIEncoding();
-            var buffer = encoder.GetBytes("Hello Server");
+			var buffer = encoder.GetBytes(message);
 
             _clientStream.Write(buffer, 0, buffer.Length);
             _clientStream.Flush();

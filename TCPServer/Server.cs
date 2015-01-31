@@ -34,31 +34,36 @@ namespace TCPServer
 			while (true)
 			{
 				bytesRead = 0;
-
 				try
 				{
 					bytesRead = clientStream.Read(message, 0, Max_Message_Size);
-
 				}
 				catch (Exception ex)
 				{
 					Debug.Print("{0} - {1}", "Error", ex.Message);
-				}
-
-				//This means the client discoonected
-				if (bytesRead == 0)
-				{
 					break;
 				}
 
 				var encoder = new ASCIIEncoding();
-				Debug.Print(encoder.GetString(message, 0, bytesRead));
+				var decodedMessage = encoder.GetString (message);
+				Debug.Print(decodedMessage);
+
+
+				//This means the client discoonected
+				if (decodedMessage.ToLower() == "disconnect")
+				{
+					Debug.Print ("Client has disconnected");
+					break;
+				}
+
+
 
 				byte[] buffer = encoder.GetBytes("Hello Client!");
 				clientStream.Write(buffer, 0, buffer.Length);
 				clientStream.Flush();
 
 			}
+
 
 			tcpClient.Close();
 
