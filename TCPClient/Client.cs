@@ -23,6 +23,8 @@ namespace TCPClient
             clientStream.Write(buffer, 0, buffer.Length);
             clientStream.Flush();
 
+			Console.WriteLine (buffer.ToString());
+
         }
     }
 }

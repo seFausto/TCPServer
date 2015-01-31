@@ -20,7 +20,4 @@ Global
 		{BCA04CC5-DC3C-4977-BFDB-88243D059D8E}.Release|x86.ActiveCfg = Release|x86
 		{BCA04CC5-DC3C-4977-BFDB-88243D059D8E}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = TCPServer\TCPServer.csproj
-	EndGlobalSection
 EndGlobal
